@@ -4,6 +4,7 @@ import { assets } from "../assets/assets";
 import Loader from "../components/Loader";
 import { useAppContext } from "../context/appContext";
 import toast from "react-hot-toast";
+import {motion} from "motion/react"
 
 const CarDetails = () => {
 	const {
@@ -61,14 +62,27 @@ const CarDetails = () => {
 
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
 				{/* left: car image & details */}
-				<div className="lg:col-span-2">
-					<img
+				<motion.div
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.6 }}
+					className="lg:col-span-2"
+				>
+					<motion.img
+						initial={{ opacity: 0, scale: 0.98 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.5 }}
 						src={car.image}
 						alt=""
 						className="w-full h-auto md:max-h-100 object-cover rounded-xl mb-6 shadow-md"
 					/>
 
-					<div className="space-y-6">
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ delay: 0.2, duration: 0.5 }}
+						className="space-y-6"
+					>
 						<div>
 							<h1 className="text-3xl font-bold">
 								{car.brand} {car.model}
@@ -95,7 +109,10 @@ const CarDetails = () => {
 									text: car.location,
 								},
 							].map(({ icon, text }) => (
-								<div
+								<motion.div
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ duration: 0.4 }}
 									key={text}
 									className="flex flex-col items-center bg-light p-4 rounded-lg"
 								>
@@ -105,7 +122,7 @@ const CarDetails = () => {
 										className="h-5 mb-2"
 									/>
 									{text}
-								</div>
+								</motion.div>
 							))}
 						</div>
 
@@ -144,11 +161,14 @@ const CarDetails = () => {
 								))}
 							</ul>
 						</div>
-					</div>
-				</div>
+					</motion.div>
+				</motion.div>
 
 				{/* right: booking form */}
-				<form
+				<motion.form
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.5, duration: 0.6 }}
 					onSubmit={handleSubmit}
 					className="shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text-gray-500"
 				>
@@ -196,7 +216,7 @@ const CarDetails = () => {
 					<p className="text-center text-sm">
 						No credit card required to reserve
 					</p>
-				</form>
+				</motion.form>
 			</div>
 		</div>
 	) : (

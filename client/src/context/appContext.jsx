@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -17,6 +18,7 @@ export const AppProvider = ({ children }) => {
 	const [pickupDate, setPickupDate] = useState("");
 	const [returnDate, setReturnDate] = useState("");
 	const [cars, setCars] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	// check if user is logged in
 	const fetchUser = async () => {
@@ -31,6 +33,8 @@ export const AppProvider = ({ children }) => {
 			}
 		} catch (error) {
 			toast.error(error.message);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -92,7 +96,14 @@ export const AppProvider = ({ children }) => {
 		setReturnDate,
 	};
 
-	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+	if (loading) {
+		return (
+			<Loader/>
+		)
+	}
+		return (
+			<AppContext.Provider value={value}>{children}</AppContext.Provider>
+		);
 };
 
 export const useAppContext = () => useContext(AppContext);

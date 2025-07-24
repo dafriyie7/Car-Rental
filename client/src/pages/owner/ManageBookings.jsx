@@ -42,7 +42,9 @@ const ManageBookings = () => {
     },[])
 
     return (
-		<div className="px-4 pt-10 md:px-10 w-full">
+		<div
+			className="px-4 pt-10 md:px-10 w-full"
+		>
 			<TitleOwner
 				title={"Manage bOOKINGS"}
 				subTitle={
@@ -50,7 +52,9 @@ const ManageBookings = () => {
 				}
 			/>
 
-			<div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
+			<div
+				className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6"
+			>
 				<table className="w-full border-collapse text-left text-sm text-gray-600">
 					<thead className="text-gray-500">
 						<tr>
