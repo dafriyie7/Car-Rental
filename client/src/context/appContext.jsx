@@ -45,17 +45,23 @@ export const AppProvider = ({ children }) => {
 			data.success ? setCars(data.cars) : toast.error(data.message);
 		} catch (error) {
 			toast.error(error.message);
-		}
+		} finally {setLoading(false)}
 	};
 
 	// user logout
 	const logout = () => {
-		localStorage.removeItem("token");
-		setToken(null);
-		setUser(null);
-		setIsOwner(false);
-		axios.defaults.headers.common["Authorization"] = "";
-		toast.success("You have been logged out");
+		try {
+			localStorage.removeItem("token");
+			setToken(null);
+			setUser(null);
+			setIsOwner(false);
+			axios.defaults.headers.common["Authorization"] = "";
+			toast.success("You have been logged out");
+		} catch (error) {
+			toast.error(error.message);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	// retrieve token from localStorage
@@ -69,8 +75,8 @@ export const AppProvider = ({ children }) => {
 		if (token) {
 			axios.defaults.headers.common["Authorization"] = `${token}`;
 			fetchUser();
-			fetchCars();
 		}
+		fetchCars();
 	}, [token]);
 
 	const value = {
@@ -97,13 +103,9 @@ export const AppProvider = ({ children }) => {
 	};
 
 	if (loading) {
-		return (
-			<Loader/>
-		)
+		return <Loader />;
 	}
-		return (
-			<AppContext.Provider value={value}>{children}</AppContext.Provider>
-		);
+	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export const useAppContext = () => useContext(AppContext);
