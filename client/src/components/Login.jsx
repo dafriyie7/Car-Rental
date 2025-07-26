@@ -11,23 +11,42 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const onSubmithandler = async (event) => {
-		try {
-			event.preventDefault()
-			const { data } = await axios.post(`/api/user/${state}`, { name, email, password })
+	// const onSubmithandler = async (event) => {
+	// 	event.preventDefault()
+	// 	try {
+	// 		const { data } = await axios.post(`/api/user/${state}`, { name, email, password })
 			
-			if (data.success) {
-				navigate('/')
-				setToken(data.token)
-				localStorage.setItem('token', data.token)
-				setShowLogin(false)
-			} else {
-				toast.error(data.message)
-			}
+	// 			navigate('/')
+	// 			setToken(data.token)
+	// 			localStorage.setItem('token', data.token)
+	// 			setShowLogin(false)
+	// 	} catch (error) {
+	// 		toast.error(error.message)
+	// 	}
+    // }
+
+	const onSubmithandler = async (event) => {
+		event.preventDefault();
+
+		try {
+			const payload =
+				state === "login"
+					? { email, password }
+					: { name, email, password };
+
+			const { data } = await axios.post(`/api/user/${state}`, payload);
+
+			// This runs only on 2xx status
+			navigate("/");
+			setToken(data.token);
+			localStorage.setItem("token", data.token);
+			setShowLogin(false);
 		} catch (error) {
-			toast.error(error.message)	
+			// This runs for 4xx or 5xx responses
+			const message = error.response?.data?.message || error.message;
+			toast.error(message);
 		}
-    }
+	};
 
     return (
 		<div
