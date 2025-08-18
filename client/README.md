@@ -1,12 +1,128 @@
-# React + Vite
+# Luxury Rent - Car Rental Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern car rental platform built with **React, TailwindCSS, Context API, and Framer Motion**, enabling users to book cars, manage their reservations, and allowing owners to manage listings and booking statuses.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Core Components](#core-components)
+- [Getting Started](#getting-started)
+- [Configuration](#configuration)
+- [Author](#author)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- User Bookings Dashboard  
+  - View active and past bookings  
+  - Track rental period, pickup location, and total cost  
+  - Booking statuses: pending, confirmed, cancelled  
+
+- Owner Bookings Management  
+  - Approve or cancel requests  
+  - Change booking status directly via dashboard  
+
+- Modern UI/UX  
+  - Smooth animations with Framer Motion  
+  - Responsive layout using TailwindCSS  
+  - Clean and minimalistic design  
+
+- Notifications  
+  - Instant success/error feedback using react-hot-toast  
+
+- Reusable Components  
+  - Shared UI elements like Title, TitleOwner, etc.  
+
+## Tech Stack
+
+- Frontend: React (with Vite)  
+- Styling: TailwindCSS  
+- Animations: Framer Motion  
+- State Management: React Context API (useAppContext)  
+- Notifications: react-hot-toast  
+- HTTP Client: Axios  
+- Backend API (assumed): Node.js + Express  
+
+## Project Structure
+
+```
+src/
+│── assets/              # Images, icons, dummy data
+│── components/          # Reusable components
+│   ├── Title.jsx
+│   ├── owner/TitleOwner.jsx
+│── context/             # Global app context
+│   ├── appContext.js
+│── pages/
+│   ├── Banner.jsx         # Landing banner section
+│   ├── MyBookings.jsx     # User bookings page
+│   ├── ManageBookings.jsx # Owner bookings management
+│── App.jsx                # Root component
+│── main.jsx               # Entry point
+```
+
+## Core Components
+
+### Banner (Banner.jsx)
+
+- Landing hero section with gradient background
+- Animated heading & image
+- Call-to-action button for listing a car
+
+### MyBookings (MyBookings.jsx)
+
+- Fetches and displays user bookings
+- Shows car details, rental period, and total price
+- Status badges (confirmed / cancelled)
+- Motion-animated booking cards
+
+### ManageBookings (ManageBookings.jsx)
+
+- Dashboard for owners to track customer bookings
+- Update booking status via dropdown
+- Displays booking details in a table view
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/luxury-rent.git
+cd luxury-rent
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. add a .env file
+
+```bash
+VITE_CURRENCY=YOUR_VITE_CURRENCY
+VITE_BASE_URL=YOUR_BACKEND_PORT
+```
+
+### 3. Start the Development Server
+
+```bash
+npm run dev
+```
+
+The app will be available at <http://localhost:5173>
+
+## Configuration
+
+- Update `appContext.js` with your backend API base URL
+- Ensure backend is running before testing booking features
+
+## Author
+
+Developed by Dan
+
+## License
+
+This project is licensed under the MIT License.
