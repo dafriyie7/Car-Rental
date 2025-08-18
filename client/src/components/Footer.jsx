@@ -5,17 +5,20 @@ import { motion } from "motion/react";
 const Footer = () => {
 	return (
 		<motion.div
+			// Animate footer entrance (fade in + slide up)
 			initial={{ opacity: 0, y: 30 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.6 }}
 			className="px-6 md:px-16 lg:px-24 xl:px-32 mt-60 text-sm text-gray-500"
 		>
+			{/* Top section: Logo, description, social icons, and navigation links */}
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6, delay: 0.2 }}
 				className="flex flex-wrap justify-between items-start gap-8 pb-6 border-borderColor border-b"
 			>
+				{/* Logo and description */}
 				<div>
 					<motion.img
 						initial={{ opacity: 0 }}
@@ -34,6 +37,8 @@ const Footer = () => {
 						Premium car rental service with a wide selection of
 						luxury and everyday vehicles for all your driving needs.
 					</motion.p>
+
+					{/* Social media icons */}
 					<motion.div
 						initial={{ opacity: 0 }}
 						whileInView={{ opacity: 1 }}
@@ -64,12 +69,14 @@ const Footer = () => {
 					</motion.div>
 				</div>
 
+				{/* Quick links, resources, and contact info */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.4 }}
 					className="flex flex-wrap justify-between w-1/2 gap-8"
 				>
+					{/* Quick links */}
 					<div>
 						<h2 className="text-base font-medium text-gray-800 uppercase">
 							Quick Links
@@ -90,6 +97,7 @@ const Footer = () => {
 						</ul>
 					</div>
 
+					{/* Resources */}
 					<div>
 						<h2 className="text-base font-medium text-gray-800 uppercase">
 							Resources
@@ -110,6 +118,7 @@ const Footer = () => {
 						</ul>
 					</div>
 
+					{/* Contact info */}
 					<div>
 						<h2 className="text-base font-medium text-gray-800 uppercase">
 							Contact
@@ -126,6 +135,8 @@ const Footer = () => {
 					</div>
 				</motion.div>
 			</motion.div>
+
+			{/* Bottom section: copyright + links */}
 			<motion.div
 				initial={{ opacity: 0, y: 10 }}
 				whileInView={{ opacity: 1, y: 0 }}
