@@ -10,7 +10,6 @@ The system allows users to book cars, track reservations, and enables owners to 
 - [Project Structure](#project-structure)
 - [Setup Instructions](#setup-instructions)
 - [Environment Variables](#environment-variables)
-- [License](#license)
 
 ---
 
@@ -125,6 +124,8 @@ npm run dev
 cd client
 npm install
 ```
+
+## Environment Variables
 
 ### 6. Create a .env file in the client folder
 
