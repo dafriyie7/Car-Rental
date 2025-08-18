@@ -8,27 +8,34 @@ import toast from "react-hot-toast";
 import { motion } from "motion/react";
 
 const Cars = () => {
+	// Get query parameters from the URL (pickup location & dates)
 	const [searchParams] = useSearchParams();
 	const pickupLocation = searchParams.get("pickupLocation");
 	const pickupDate = searchParams.get("pickupDate");
 	const returnDate = searchParams.get("returnDate");
 
+	// Access global context values
 	const { cars, axios } = useAppContext();
 
+	// Local state for search filter input and filtered car list
 	const [input, setInput] = useState("");
 	const [filteredCars, setFilteredCars] = useState([]);
 
+	// Boolean to check if user is searching with location & dates
 	const isSearchData = pickupLocation && pickupDate && returnDate;
 
+	/**
+	 * Apply client-side filter based on user input (brand, model, category, etc.)
+	 */
 	const applyFilter = () => {
 		if (!input || input.trim() === "") {
-			setFilteredCars(cars);
+			setFilteredCars(cars); // Show all cars if no input
 			return;
 		}
 
 		const lower = input.toLowerCase();
 
-		const filtered = cars.slice().filter((car) => {
+		const filtered = cars.filter((car) => {
 			const brand = car.brand?.toLowerCase() || "";
 			const model = car.model?.toLowerCase() || "";
 			const category = car.category?.toLowerCase() || "";
@@ -47,6 +54,9 @@ const Cars = () => {
 		setFilteredCars(filtered);
 	};
 
+	/**
+	 * Call API to check availability of cars based on location & dates
+	 */
 	const searchCarAvailability = async () => {
 		try {
 			const { data } = await axios.post(
@@ -72,12 +82,18 @@ const Cars = () => {
 		}
 	};
 
+	/**
+	 * Run availability check when search parameters exist
+	 */
 	useEffect(() => {
 		if (isSearchData) {
 			searchCarAvailability();
 		}
 	}, [pickupLocation, pickupDate, returnDate]);
 
+	/**
+	 * Run local filter when user types into the search bar
+	 */
 	useEffect(() => {
 		if (!isSearchData && cars.length > 0) {
 			applyFilter();
@@ -86,6 +102,7 @@ const Cars = () => {
 
 	return (
 		<div>
+			{/* Page Title & Search Input */}
 			<motion.div
 				initial={{ opacity: 0, y: 30 }}
 				animate={{ opacity: 1, y: 0 }}
@@ -99,6 +116,7 @@ const Cars = () => {
 					}
 				/>
 
+				{/* Search Bar */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -107,7 +125,7 @@ const Cars = () => {
 				>
 					<img
 						src={assets.search_icon}
-						alt=""
+						alt="search"
 						className="w-4 h-4 mr-2"
 					/>
 					<input
@@ -119,29 +137,32 @@ const Cars = () => {
 					/>
 					<img
 						src={assets.filter_icon}
-						alt=""
+						alt="filter"
 						className="w-4 h-4 ml-2"
 					/>
 				</motion.div>
 			</motion.div>
 
+			{/* Car Results Section */}
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.6, duration: 0.5 }}
 				className="px-6 md:px-16 lg:px-24 xl:px-32 mt-10"
 			>
+				{/* Car Count */}
 				<p className="text-gray-500 xl:px-20 max-w-7xl mx-auto">
 					Showing {filteredCars.length} Cars
 				</p>
 
+				{/* Car Grid */}
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4 xl:px-20 max-w-7xl mx-auto">
 					{filteredCars.map((car, index) => (
 						<motion.div
+							key={car._id || index}
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.1 * index, duration: 0.4 }}
-							key={index}
 						>
 							<CarCard car={car} />
 						</motion.div>
