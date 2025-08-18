@@ -1,61 +1,75 @@
-import { useEffect, useState } from 'react'
-import TitleOwner from '../../components/owner/TitleOwner'
-import { useAppContext } from '../../context/appContext'
-import toast from 'react-hot-toast'
+import { useEffect, useState } from "react";
+import TitleOwner from "../../components/owner/TitleOwner";
+import { useAppContext } from "../../context/appContext";
+import toast from "react-hot-toast";
 
 const ManageBookings = () => {
+	// Extract values from global context
+	const { currency, axios, isOwner } = useAppContext();
 
-    const {currency, axios, isOwner} = useAppContext()
+	// Local state for all bookings
+	const [bookings, setBookings] = useState([]);
 
-    const [bookings, setBookings] = useState([])
-
-    const fetchOwnerBookings = async () => {
+	/**
+	 * Fetch all bookings belonging to the current owner
+	 */
+	const fetchOwnerBookings = async () => {
 		try {
 			const { data } = await axios.get("/api/booking/owner");
-			data.success
-				? setBookings(data.bookings)
-				: toast.error(data.message);
-		} catch (error) {
-			toast.error(error.message);
-		}
-    };
-    
-    const changeBookingStatus = async (bookingId, status) => {
-		try {
-            const { data } = await axios.post("/api/booking/change-status", { bookingId, status });
-            
-            if (data.success) {
-                toast.success(data.message)
-                fetchOwnerBookings()
-            } else {
-                toast.error(data.message)
-            }
-			
+			if (data.success) {
+				setBookings(data.bookings);
+			} else {
+				toast.error(data.message);
+			}
 		} catch (error) {
 			toast.error(error.message);
 		}
 	};
 
-    useEffect(() => {
-		fetchOwnerBookings()
-		console.log(isOwner)
-    },[])
+	/**
+	 * Change booking status (pending → confirmed/cancelled)
+	 * @param {string} bookingId - The ID of the booking
+	 * @param {string} status - New status for the booking
+	 */
+	const changeBookingStatus = async (bookingId, status) => {
+		try {
+			const { data } = await axios.post("/api/booking/change-status", {
+				bookingId,
+				status,
+			});
 
-    return (
-		<div
-			className="px-4 pt-10 md:px-10 w-full"
-		>
+			if (data.success) {
+				toast.success(data.message);
+				fetchOwnerBookings(); // Refresh bookings after status change
+			} else {
+				toast.error(data.message);
+			}
+		} catch (error) {
+			toast.error(error.message);
+		}
+	};
+
+	// Load bookings once when component mounts
+	useEffect(() => {
+		if (isOwner) {
+			fetchOwnerBookings();
+		}
+	}, [isOwner]);
+
+	return (
+		<div className="px-4 pt-10 md:px-10 w-full">
+			{/* Page Header */}
 			<TitleOwner
-				title={"Manage bOOKINGS"}
+				title={"Manage Bookings"}
 				subTitle={
 					"Track all customer bookings, approve or cancel requests, and manage booking statuses."
 				}
 			/>
 
-			<div
-				className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6"
-			>
+			{/* Bookings Table */}
+			<div className="max-w-3xl w-full rounded-md overflow-hidden border border-borderColor mt-6">
 				<table className="w-full border-collapse text-left text-sm text-gray-600">
+					{/* Table Head */}
 					<thead className="text-gray-500">
 						<tr>
 							<th className="p-3 font-medium">Car</th>
@@ -69,16 +83,19 @@ const ManageBookings = () => {
 							<th className="p-3 font-medium">Actions</th>
 						</tr>
 					</thead>
+
+					{/* Table Body */}
 					<tbody>
 						{bookings.map((booking, index) => (
 							<tr
 								key={index}
 								className="border-t border-borderColor text-gray-500"
 							>
+								{/* Car Info */}
 								<td className="p-3 flex items-center gap-3">
 									<img
 										src={booking.car.image}
-										alt=""
+										alt={`${booking.car.brand} ${booking.car.model}`}
 										className="h-12 w-12 aspect-square rounded-md object-cover"
 									/>
 									<p className="font-medium max-md:hidden">
@@ -86,11 +103,13 @@ const ManageBookings = () => {
 									</p>
 								</td>
 
+								{/* Date Range */}
 								<td className="p-3 max-md:hidden">
 									{booking.pickupDate.split("T")[0]} to{" "}
 									{booking.returnDate.split("T")[0]}
 								</td>
 
+								{/* Total Price */}
 								<td className="p-3">
 									{currency}{" "}
 									{booking.price.toLocaleString(undefined, {
@@ -99,11 +118,14 @@ const ManageBookings = () => {
 									})}
 								</td>
 
+								{/* Payment Method */}
 								<td className="p-3 max-md:hidden">
 									<span className="bg-gray-100 px-3 py-1 rounded-full text-xs">
-										offline
+										Offline
 									</span>
 								</td>
+
+								{/* Booking Actions */}
 								<td className="p-3">
 									{booking.status === "pending" ? (
 										<select
@@ -145,6 +167,6 @@ const ManageBookings = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default ManageBookings
+export default ManageBookings;
