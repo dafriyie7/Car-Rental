@@ -1,5 +1,7 @@
 # Luxury Rent - Full Stack Car Rental Platform
 
+[View the live demo](https://car-rental-one-virid.vercel.app/)
+
 A modern car rental platform with a **React frontend** and a **Node.js + Express backend**.  
 The system allows users to book cars, track reservations, and enables owners to manage listings, availability, and bookings.
 
