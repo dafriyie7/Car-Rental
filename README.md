@@ -96,7 +96,7 @@ luxury-rent/
 
 ```bash
 git clone https://github.com/dafriyie7/Car-Rental.git
-cd luxury-rent
+cd Car-Rental
 
 ### 2. Setup the server
 
