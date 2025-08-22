@@ -89,8 +89,8 @@ src/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/luxury-rent.git
-cd luxury-rent
+git clone https://github.com/your-username/Car-Rental.git
+cd Car-Rental
 ```
 
 ### 2. Install Dependencies
