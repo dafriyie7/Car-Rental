@@ -32,8 +32,8 @@ This API manages user authentication, car listings, bookings, and owner dashboar
 1. Clone this repository:
 
    ```bash
-   git clone <repo-url>
-   cd <project-folder>
+   git clone https://github.com/dafriyie7/Car-Rental
+   cd cd Car-Rental
    ```
 
 2. Install dependencies:
