@@ -95,7 +95,7 @@ luxury-rent/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/dafriyie7/luxury-rent.git
+git clone git@github.com:dafriyie7/Car-Rental.git
 cd luxury-rent
 
 ### 2. Setup the server
