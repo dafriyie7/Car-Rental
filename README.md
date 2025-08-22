@@ -95,7 +95,7 @@ luxury-rent/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/luxury-rent.git
+git clone https://github.com/dafriyie7/luxury-rent.git
 cd luxury-rent
 
 ### 2. Setup the server
